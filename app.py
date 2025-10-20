@@ -4,6 +4,12 @@ import cv2
 import numpy as np
 from flask_socketio import SocketIO, emit
 import atexit # Added for cleanup
+import time # Added to track time for duration limit
+
+# --- CONFIGURATION CONSTANTS ---
+# Set the maximum duration for the video stream (in seconds)
+STREAM_DURATION_SECONDS = 30 
+# -------------------------------
 
 # Initialize Flask app and SocketIO
 app = Flask(__name__)
@@ -48,7 +54,17 @@ def generate_frames():
     """Generator function to capture frames and perform real-time prediction."""
     global fall_detected_frames
     
+    # --- START TIMER ---
+    start_time = time.time()
+    
     while True:
+        
+        # --- DURATION CHECK ---
+        if time.time() - start_time > STREAM_DURATION_SECONDS:
+            print(f"Stream duration limit of {STREAM_DURATION_SECONDS} seconds reached. Stopping stream.")
+            break
+        # ----------------------
+        
         success, frame = camera.read()
         if not success:
             break
