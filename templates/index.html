@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Monitoring Dashboard</title>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='modal-styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="logo-container">
+            <h1 class="logo-text">Hospital Monitoring</h1>
+            <p class="tagline">Real-time fall & posture alerts</p>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Services</a></li>
+                <li><button class="login-button" id="login-button">Login</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="main-content">
+        <!-- Left Column: Live Camera Feeds -->
+        <section class="camera-feeds-section">
+            <h2 class="section-title">Live Camera Feeds</h2>
+            <p class="section-subtitle">Click any camera to open full view. Streams are placeholders &mdash; replace `<img>` with RTSP/WebRTC feed.</p>
+            
+            <div class="camera-grid">
+                <!-- Camera Card 1 (Live Feed) -->
+                <article class="camera-card" id="camera-card-1" data-room="101">
+                    <img src="{{ url_for('video_feed') }}" alt="Camera Feed for Room 101" id="camera-feed-1">
+                    <h3 class="camera-label">Room 101 &mdash; Bed A</h3>
+                </article>
+                <!-- Camera Card 2 -->
+                <article class="camera-card" id="camera-card-2" data-room="102">
+                    <img src="https://placehold.co/600x400/212b36/ffffff?text=Cam+102" alt="Camera Feed for Room 102">
+                    <h3 class="camera-label">Room 102 &mdash; Bed B</h3>
+                </article>
+                <!-- Camera Card 3 -->
+                <article class="camera-card" id="camera-card-3" data-room="103">
+                    <img src="https://placehold.co/600x400/212b36/ffffff?text=Cam+103" alt="Camera Feed for Room 103">
+                    <h3 class="camera-label">Room 103 &mdash; Bed C</h3>
+                </article>
+                <!-- Camera Card 4 -->
+                <article class="camera-card" id="camera-card-4" data-room="104">
+                    <img src="https://placehold.co/600x400/212b36/ffffff?text=Cam+104" alt="Camera Feed for Room 104">
+                    <h3 class="camera-label">Room 104 &mdash; Bed D</h3>
+                </article>
+            </div>
+
+            <div class="sort-controls">
+                <button class="acknowledge-button" id="acknowledge-button">Acknowledge all</button>
+                <div class="sort-dropdown-container">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort" class="sort-select">
+                        <option value="default">Default</option>
+                        <option value="room">Room</option>
+                        <option value="time">Time</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Alerts & Actions -->
+        <aside class="alerts-actions-sidebar">
+            
+            <!-- Alerts Section -->
+            <section class="alerts-section">
+                <h2 class="section-title">Alerts</h2>
+                <div id="alerts-container">
+                    <!-- Alert Card 1 -->
+                    <article class="alert-card alert-fall" data-timestamp="1674534930">
+                        <h3 class="alert-title">Fall detected &mdash; Camera 101</h3>
+                        <p class="alert-details">2025-09-24 17:02 &bull; Bed A, low mobility</p>
+                    </article>
+                    <!-- Alert Card 2 -->
+                    <article class="alert-card alert-panic" data-timestamp="1674534612">
+                        <h3 class="alert-title">Panic gesture &mdash; Camera 103</h3>
+                        <p class="alert-details">2025-09-24 16:48 &bull; Hand on chest detected</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Quick Actions Section -->
+            <section class="quick-actions-section">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-buttons-container">
+                    <button class="action-button" id="open-live-monitor-btn">Open Live Monitor</button>
+                    <button class="action-button" id="view-incident-logs-btn">View Incident Logs</button>
+                    <button class="action-button" id="contact-support-btn">Contact Support</button>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <!-- Modal for Full View -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <video id="modal-video-feed" autoplay></video>
+        </div>
+    </div>
+
+    <!-- Hidden audio element for the buzzer -->
+    <audio id="buzzer-sound" src="{{ url_for('static', filename='buzzer.mp3') }}" preload="auto"></audio>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Large Model Files - KEEP THESE OUT OF GIT
+# Assuming the model is large and static. If it's small, you can include it.
+fall_detection_model.h5
+
+# Dataset - NEVER INCLUDE RAW DATASETS IN GIT
+dataset/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Flask/Web related
+*.log
+
+# Python dependencies
+pip-selfcheck.json
