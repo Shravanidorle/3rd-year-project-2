@@ -100,8 +100,8 @@ def generate_frames():
 
                     if fall_detected_frames >= FALL_PERSISTENCE_THRESHOLD:
                         # Draw a red box and text on the frame
-                        cv2.rectangle(frame, (5, 5), (400, 70), (0, 0, 255), -1)
-                        cv2.putText(frame, f'FALL DETECTED! ({raw_confidence:.2f})', (15, 45),
+                        cv2.rectangle(frame, (50, 50), (450, 120), (0, 0, 255), -1)
+                        cv2.putText(frame, f'FALL DETECTED! ({raw_confidence:.2f})', (70, 95),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
                         
                         # Emit a WebSocket event to the frontend
