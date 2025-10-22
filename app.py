@@ -3,8 +3,8 @@ import tensorflow as tf
 import cv2
 import numpy as np
 from flask_socketio import SocketIO, emit
-import atexit # Added for cleanup
-import time # Added to track time for duration limit
+import atexit 
+import time 
 
 # --- CONFIGURATION CONSTANTS ---
 # Set the maximum duration for the video stream (in seconds)
@@ -29,10 +29,8 @@ except Exception as e:
     print("Please make sure 'fall_detection_model.h5' is in the same directory and is a valid Keras model.")
 
 # Class labels for the model's output
-# Since you are using round(prediction[0][0]), this implies a single output neuron (binary classification)
-CLASS_LABELS = ['Fall', 'No Fall'] # ASSUMPTION: 'Fall' = 0, 'No Fall' = 1 (if model output is 0 or 1)
-# If your model output is the probability of 'No Fall', then:
-# CLASS_LABELS = ['No Fall', 'Fall'] # 'No Fall' = 0, 'Fall' = 1
+# ASSUMPTION: ['Fall'] = 0, ['No Fall'] = 1
+CLASS_LABELS = ['Fall', 'No Fall']
 
 # Persistence check variables
 fall_detected_frames = 0
@@ -79,22 +77,20 @@ def generate_frames():
                 prediction = model.predict(frame_expanded, verbose=0)
                 
                 # Assuming single output neuron (e.g., probability of class 1)
-                # The raw output is prediction[0][0]
                 raw_confidence = prediction[0][0]
                 
                 # Determine predicted index and label
-                # Since you are using round(), we assume anything > 0.5 rounds to 1, and <= 0.5 rounds to 0
                 predicted_index = int(round(raw_confidence))
                 prediction_label = CLASS_LABELS[predicted_index]
                 
-                # --- DEBUGGING OUTPUT ---
-                print(f"RAW PREDICTION: {raw_confidence:.4f} | LABEL: {prediction_label} | ROUNDED INDEX: {predicted_index}")
+                # --- DEBUGGING OUTPUT (Optional: remove in production) ---
+                # print(f"RAW PREDICTION: {raw_confidence:.4f} | LABEL: {prediction_label} | ROUNDED INDEX: {predicted_index}")
                 # ------------------------
                 
                 # Persistence check for falls
                 
-                # TEMPORARY LOGIC CHANGE: Check for ANY prediction to the 'Fall' label
-                if predicted_index == 0: # This means the model predicted 'Fall' based on the round() function
+                # Check for prediction to the 'Fall' label (assuming index 0 is 'Fall')
+                if predicted_index == 0: 
                     
                     fall_detected_frames += 1
 
@@ -104,8 +100,7 @@ def generate_frames():
                         cv2.putText(frame, f'FALL DETECTED! ({raw_confidence:.2f})', (70, 95),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
                         
-                        # Emit a WebSocket event to the frontend
-                        # FIX: Removed broadcast=True and namespace='/' to fix the keyword argument error
+                        # Emit a WebSocket event to the frontend dashboard
                         socketio.emit('fall_alert', {'message': 'Fall detected in Room 101!'})
                         
                     # Keep the persistence counter running, do not reset it until a 'No Fall' is seen
@@ -113,7 +108,6 @@ def generate_frames():
                     fall_detected_frames = 0
                         
             except Exception as e:
-                # IMPORTANT: Print the actual error object to the console, not a static string
                 print(f"Error during prediction: {e}")
                 
             # Encode the frame to JPEG
@@ -123,26 +117,37 @@ def generate_frames():
             yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+# --- 1. NEW LANDING PAGE ---
 @app.route('/')
 def index():
-    # RENDER THE INDEX FILE
-    return render_template('index.html')
+    """Renders the main dashboard page."""
+    return render_template('dashboard.html')
 
-@app.route('/about.html')
+# --- 2. OLD HOME/CAMERA FEEDS PAGE (Now accessible via /home) ---
+@app.route('/home')
+def home():
+    """Renders the live camera feeds page."""
+    # We assume you will rename/move your existing index.html content to home.html
+    # For now, we keep it rendering the original index.html as per your request
+    return render_template('index.html') 
+
+# --- 3. CLEANED UP ROUTES ---
+@app.route('/about')
 def about():
+    """Renders the About page."""
     return render_template('about.html')
 
-@app.route('/services.html')
+@app.route('/services')
 def services():
+    """Renders the Services page."""
     return render_template('services.html')
 
+# --- VIDEO STREAM ROUTE (Unchanged) ---
 @app.route('/video_feed')
 def video_feed():
     return Response(generate_frames(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# We must run the socketio app on the main thread for the cleanup function to work reliably.
-# You need to manually handle SocketIO in your local environment.
-# The flask run or python app.py should execute socketio.run(app, debug=True)
 if __name__ == '__main__':
+    # Use socketio.run for integrated Flask-SocketIO server
     socketio.run(app, debug=True)

@@ -499,3 +499,537 @@ main ul li:hover {
     font-weight: 600;
     font-size: 0.95rem;
 }
+
+/* A modern, professional style for the hospital monitoring dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Root Variables and Global Resets (Inter Aesthetic) --- */
+:root {
+    --bg-color: #f0f4f8; /* Light, calming background */
+    --primary-color: #004d99; /* Deep Hospital Blue (primary focus color) */
+    --primary-hover-color: #003366;
+    --accent-color: #ff5757; /* Alert Red/Accent */
+    --card-bg: #ffffff;
+    --text-color: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --alert-fall-bg: #F8D7DA;
+    --alert-fall-border: #F5C6CB;
+    --alert-fall-text: #721C24;
+    --alert-panic-bg: #FFF3CD;
+    --alert-panic-border: #FFEBA3;
+    --alert-panic-text: #856404;
+    --alert-prolonged-bg: #D4EDDA;
+    --alert-prolonged-border: #C3E6CB;
+    --alert-prolonged-text: #155724;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Typography & Headings --- */
+h2, h3 {
+    font-weight: 600;
+}
+h2.section-title {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    border-left: 4px solid var(--accent-color);
+    padding-left: 10px;
+}
+
+/* --- Header / Navbar --- */
+.header {
+    background-color: var(--card-bg);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+    .header { flex-direction: row; }
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+    .logo-container { align-items: flex-start; margin-bottom: 0; }
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.tagline {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active-link {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.login-button {
+    background-color: var(--accent-color);
+    color: var(--card-bg);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover {
+    background-color: #e04a4a;
+    transform: translateY(-2px);
+}
+
+/* --- Main Layout --- */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+@media (min-width: 1024px) {
+    .main-content {
+        grid-template-columns: 2fr 1fr; /* Two-column layout for dashboard/feeds */
+    }
+}
+
+.camera-feeds-section, 
+.alerts-actions-sidebar,
+.alerts-section,
+.quick-actions-section {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+}
+
+/* --- Camera Grid / Quick Access Cards --- */
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.camera-card {
+    /* Base style for both live feed images and dashboard quick links */
+    background-color: var(--primary-color);
+    color: #e5e7eb;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none; /* For the link card */
+    min-height: 150px;
+    justify-content: flex-end; /* Align label to the bottom for feeds */
+}
+.camera-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Dashboard Quick Links Override (centered content) */
+.camera-card .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+    text-align: center;
+}
+.camera-card .card-content span {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+.camera-card .card-content .camera-label {
+    position: static;
+    background: none;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 1.125rem;
+}
+.camera-card .card-content p {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.camera-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.camera-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+}
+
+/* --- Alerts and Sidebar --- */
+
+/* Alert Card Base */
+.alert-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    margin-bottom: 1rem;
+    border-left: 4px solid;
+    transition: all 0.3s ease;
+}
+
+.alert-card .alert-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+}
+
+.alert-card .alert-details {
+    font-size: 0.875rem;
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+/* Specific Alert Styles */
+.alert-fall {
+    background-color: var(--alert-fall-bg);
+    border-color: var(--alert-fall-border);
+    color: var(--alert-fall-text);
+}
+
+.alert-panic {
+    background-color: var(--alert-panic-bg);
+    border-color: var(--alert-panic-border);
+    color: var(--alert-panic-text);
+}
+
+.alert-prolonged {
+    background-color: var(--alert-prolonged-bg);
+    border-color: var(--alert-prolonged-border);
+    color: var(--alert-prolonged-text);
+}
+
+/* Quick Actions */
+.action-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    margin-bottom: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.action-button:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+}
+
+/* Sort and Acknowledge Controls */
+.sort-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.acknowledge-button {
+    background-color: var(--accent-color);
+    color: var(--card-bg);
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.acknowledge-button:disabled {
+    background-color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.sort-dropdown-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.sort-select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Utility/Modal Support Classes --- */
+.hidden {
+    display: none !important;
+}
+/* --- SPACIOUS FOOTER STYLES --- */
+.main-footer {
+    /* STICKY FOOTER FIX: Pushes the element to the bottom of the flex container */
+    margin-top: 14rem; 
+    
+    background-color: var(--card-bg); /* White background */
+    color: var(--text-secondary); /* Grey text */
+    border-top: 1px solid var(--border-color); /* Light separator line */
+    box-shadow: 0 -2px 4px -2px rgb(0 0 0 / 0.05); /* Subtle shadow above */
+}
+
+/* Class for the new, spacious version of the footer */
+.spacious-footer {
+    padding: 2.5rem 1.5rem; /* Increased vertical padding for space */
+}
+
+.footer-grid {
+    display: grid;
+    /* Sets up 4 columns on large screens, and auto-wraps on smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 1.5rem auto; /* Center the grid and add bottom margin */
+    text-align: left;
+}
+
+.column-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color); /* Darker title text */
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-separator {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-bottom p {
+    font-size: 0.875rem;
+    margin: 0;
+    text-align: center;
+}
+
+.technology-tag {
+    font-style: italic;
+    font-size: 0.75rem;
+    color: #a0aec0; /* Lighter grey */
+}
+
+/* --- Media Queries for Footer Bottom Alignment --- */
+@media (min-width: 768px) {
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .footer-bottom p {
+        text-align: left;
+    }
+}
+/* --- HERO SLIDER CONTAINER --- */
+.hero-slider-container {
+    width: 100%;
+    min-height: 40vh; /* Set a minimum visible height */
+    overflow: hidden; /* Hide slides that are out of view */
+    position: relative;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow); /* Matches your card aesthetic */
+    border-radius: 1rem; /* Matches your overall aesthetic */
+}
+
+.slider-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.slider-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-color); /* Use your primary blue color */
+    
+    /* Transition for smooth fading */
+    opacity: 0; 
+    transition: opacity 1.5s ease-in-out;
+    z-index: 1; /* Default state: hidden behind current slide */
+
+    /* Flexbox for centering text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Ensure the first slide is visible on load before JS kicks in */
+.slider-slide[data-slide="1"] {
+    opacity: 1;
+    z-index: 2;
+}
+
+.slide-content {
+    color: var(--card-bg); /* White text */
+    max-width: 800px;
+}
+
+.slide-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.slide-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.slider-button {
+    display: inline-block;
+    background-color: var(--card-bg); /* White button background */
+    color: var(--primary-color); /* Blue text */
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slider-button:hover {
+    background-color: var(--bg-color); /* Light gray on hover */
+    transform: translateY(-2px);
+}
+
+/* Specific styling for the alert button (making it stand out) */
+.alert-button {
+    background-color: #ff5757; /* Red accent */
+    color: white;
+}
+
+.alert-button:hover {
+    background-color: #e04a4a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-slider-container {
+        min-height: 25vh;
+    }
+    .slide-content h1 {
+        font-size: 1.8rem;
+    }
+    .slider-button {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+.hero-slider-container {
+    min-height: 40vh; /* Ensures the container is at least 40% of the viewport height */
+}

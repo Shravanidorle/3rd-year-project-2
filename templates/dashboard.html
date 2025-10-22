@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Monitoring Dashboard</title>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='modal-styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="header">
+        <div class="logo-container">
+            <h1 class="logo-text">Hospital Monitoring</h1>
+            <p class="tagline">Real-time fall & posture alerts</p>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <!-- Dashboard is the current active page -->
+                <li><a href="/" class="active-link">Dashboard</a></li>
+                <!-- Patient Monitors links to the live feeds page -->
+                <li><a href="/home">Patient Monitors</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><button class="login-button" id="login-button">Login</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- slider section -->
+    <section class="hero-slider-container">
+        <div class="slider-wrapper" id="dashboard-slider">
+            <!-- Slide 1: Welcome -->
+            <div class="slider-slide" data-slide="1"
+                style="background-image: url('{{ url_for('static', filename='slide1.jpg') }}');">
+                <div class="slide-content">
+                    <h1>Welcome, Monitoring Specialist</h1>
+                    <p>Real-time oversight for critical patient care units. Navigate to **Patient Monitors** to view
+                        live feeds.</p>
+                    <a href="/home" class="slider-button">View Live Monitors</a>
+                </div>
+            </div>
+
+            <!-- Slide 2: Fall Detection -->
+            <div class="slider-slide" data-slide="2"
+                style="background-image: url('{{ url_for('static', filename='slide2.jpg') }}');">
+                <div class="slide-content">
+                    <h1>AI-Powered Fall Detection</h1>
+                    <p>Our machine learning models provide instant alerts, reducing response time for patient safety.
+                    </p>
+                    <a href="#alerts-container" class="slider-button alert-button">Review Current Alerts</a>
+                </div>
+            </div>
+
+            <!-- Slide 3: System Status -->
+            <div class="slider-slide" data-slide="3"
+                style="background-image: url('{{ url_for('static', filename='slide2.jpg') }}');">
+                <div class="slide-content">
+                    <h1>All Systems Operational</h1>
+                    <p>High-reliability monitoring ensures 99.9% uptime. Check incident logs for history and metrics.
+                    </p>
+                    <a href="/services" class="slider-button">View System Metrics</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- Automatic Slider Logic ---
+        const slider = document.getElementById('dashboard-slider');
+        const slides = slider.querySelectorAll('.slider-slide');
+        let currentSlide = 0;
+        const intervalTime = 4000; // Slide change every 4 seconds
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach((slide) => {
+                slide.style.opacity = '0';
+                slide.style.zIndex = '1';
+            });
+            // Show the current slide
+            slides[index].style.opacity = '1';
+            slides[index].style.zIndex = '2';
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Initialize the slider
+        showSlide(currentSlide);
+
+        // Start the automatic sliding
+        setInterval(nextSlide, intervalTime);
+    </script>
+
+
+    <!-- Main Content Section (Uses your two-column layout classes) -->
+    <main class="main-content">
+
+        <!-- Left Column: Status Overview & Quick Links -->
+        <section class="camera-feeds-section">
+            <h2 class="section-title">System Status Overview</h2>
+
+            <!-- Overall Status Card (Relies on CSS classes like alert-card and alert-prolonged for styling) -->
+            <article id="status-summary-card" class="alert-card alert-prolonged" data-status="clear">
+                <div>
+                    <h3 class="alert-title">Current System Health</h3>
+                    <span id="status-icon">&#x2705;</span> <!-- Green Checkmark -->
+                </div>
+                <p id="status-text">All Systems Normal</p>
+                <p class="alert-details">Last updated: 10:30 AM</p>
+            </article>
+
+            <h2 class="section-title">Quick Access & Monitors</h2>
+            <div class="camera-grid">
+
+                <!-- Quick Link 1: Patient Monitors (Styled as a camera-card) -->
+                <a href="/home" class="camera-card">
+                    <div class="card-content">
+                        <span>👁️</span>
+                        <h3 class="camera-label">Patient Monitors</h3>
+                        <p>View Live Camera Feeds</p>
+                    </div>
+                </a>
+
+                <!-- Quick Link 2: Incident Logs (Styled as a button/card) -->
+                <button class="camera-card" id="view-incident-logs-btn">
+                    <div class="card-content">
+                        <span>&#x1F4DC;</span>
+                        <h3 class="camera-label">Incident Logs</h3>
+                        <p>Review past alerts</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="sort-controls">
+                <button class="acknowledge-button" id="acknowledge-button" disabled>Acknowledge Pending (0)</button>
+            </div>
+        </section>
+
+        <!-- Right Column: Alerts Log & Quick Actions Sidebar -->
+        <aside class="alerts-actions-sidebar">
+
+            <!-- Alerts Section -->
+            <section class="alerts-section">
+                <h2 class="section-title">Live Alert Stream</h2>
+                <div id="alerts-container">
+                    <!-- Placeholder Alert -->
+                    <article class="alert-card alert-prolonged">
+                        <h3 class="alert-title">System Ready</h3>
+                        <p class="alert-details">2025-09-24 18:00 &bull; Waiting for new data</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Quick Actions Section -->
+            <section class="quick-actions-section">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-buttons-container">
+                    <a href="/home" class="action-button">Open Live Monitor</a>
+                    <button class="action-button" id="contact-support-btn">Contact Support</button>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <!-- Login Modal Overlay (Needs modal-styles.css) -->
+    <div id="login-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-login-modal" class="close-button">&times;</button>
+            <h2>Hospital Staff Login</h2>
+            <p>Enter your credentials to access the system controls.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username (e.g., staff ID)</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-submit-button">Log In</button>
+                <p id="login-message" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="main-footer spacious-footer">
+        <div class="footer-grid">
+
+            <div class="footer-column">
+                <h4 class="column-title">Quick Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/home">Patient Monitors</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/services">Our Services</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="column-title">Resources & Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Support</a></li>
+                    <li><a href="#">Incident Logs</a></li>
+                    <li><a href="#">Technical Documentation</a></li>
+                    <li><a href="#">System Status</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="column-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Security Statement</a></li>
+                    <li><a href="#">HIPAA Compliance</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="column-title">Hospital Info</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Central Location</a></li>
+                    <li><a href="#">Staff Directory</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <hr class="footer-separator">
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Hospital Monitoring System. All rights reserved.</p>
+            <p class="technology-tag">Powered by Flask, TensorFlow, & WebSockets for Real-Time Monitoring.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript to automatically set the current year -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
