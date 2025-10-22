@@ -103,3 +103,81 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// --- Login Modal Interaction ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Get Elements
+    // The query selector targets the button element inside the <nav> element, 
+    // which is used as the Login button across your pages.
+    const loginButton = document.querySelector('nav button'); 
+    const loginModal = document.getElementById('login-modal-overlay');
+    const closeButton = document.getElementById('close-login-modal');
+    const loginForm = document.getElementById('login-form');
+    const loginMessage = document.getElementById('login-message');
+    
+    // 2. Open Modal Listener (When "Login" button is clicked)
+    if (loginButton) {
+        loginButton.addEventListener('click', () => {
+            if (loginModal) {
+                loginModal.classList.remove('hidden');
+            }
+        });
+    }
+
+    // 3. Close Modal Listener (When "X" button is clicked)
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            if (loginModal) {
+                loginModal.classList.add('hidden');
+            }
+            if (loginMessage) {
+                loginMessage.textContent = ''; // Clear any previous error message
+            }
+            if (loginForm) {
+                loginForm.reset(); // Clear the form fields
+            }
+        });
+    }
+
+    // 4. Submit Form Handler (Simulated Authentication)
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get values from the form inputs
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulate a successful login check
+            // Use 'staff' and '1234' for a successful demo login
+            if (username === 'staff' && password === '1234') {
+                // SUCCESS
+                if (loginMessage) {
+                    loginMessage.style.color = 'green';
+                    loginMessage.textContent = 'Login successful! Access Granted.';
+                }
+                
+                // Hide the modal after a short delay
+                setTimeout(() => {
+                    if (loginModal) {
+                        loginModal.classList.add('hidden');
+                    }
+                    if (loginForm) {
+                         loginForm.reset();
+                    }
+                    if (loginMessage) {
+                        loginMessage.style.color = '#ff5757'; // Reset error color
+                        loginMessage.textContent = '';
+                    }
+                }, 1500);
+                
+            } else {
+                // FAILURE
+                if (loginMessage) {
+                    loginMessage.textContent = 'Invalid username or password.';
+                }
+            }
+        });
+    }
+});

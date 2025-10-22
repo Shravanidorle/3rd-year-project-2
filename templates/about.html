@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
+    <!-- IMPORTANT: This line links the page to the styles.css file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
     <!-- Header / Navbar -->
+    <!-- The "container" class centers and limits the width of the content -->
     <header>
-        <div>
+        <div class="container"> 
             <h1>Hospital Monitoring</h1>
             <p>Real-time fall & posture alerts</p>
         </div>
@@ -17,17 +20,35 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Services</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><button>Login</button></li>
             </ul>
         </nav>
     </header>
 
-    <main>
+    <!-- The "container" class ensures the main content is centered and styled -->
+    <main class="container">
         <h1>About Our Project</h1>
         <p>This project leverages OpenCV and AI/ML to provide real-time patient monitoring in a hospital setting. Our goal is to enhance patient safety and streamline hospital management by automating the detection of critical events like falls or signs of distress.</p>
 
         <p>The system is designed to integrate with existing CCTV infrastructure, providing a non-intrusive way to monitor patients while respecting their privacy. Alerts are sent to a central dashboard, allowing hospital staff to respond promptly to emergencies.</p>
+        
+        <!-- Added a new section for structure matching the CSS -->
+        <section class="about-section">
+            <h2>Our Mission</h2>
+            <p>Our mission is to reduce preventable injuries in healthcare facilities by providing a reliable, passive monitoring solution. We aim to empower clinical staff with immediate, actionable data to improve patient outcomes and increase operational efficiency.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>Technology Stack</h2>
+            <p>The system is built on a robust, lightweight stack ideal for real-time processing:</p>
+            <ul>
+                <li>**Backend:** Python, Flask, and Flask-SocketIO for real-time communication.</li>
+                <li>**AI/ML:** TensorFlow and Keras for the trained fall detection model.</li>
+                <li>**Video Processing:** OpenCV (cv2) for frame capture and manipulation.</li>
+                <li>**Frontend:** HTML5, CSS (Styled), and JavaScript for a responsive dashboard.</li>
+            </ul>
+        </section>
     </main>
 
 </body>

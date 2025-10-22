@@ -224,3 +224,278 @@ h2 {
         grid-template-columns: 2fr 1fr;
     }
 }
+/* About.html page */
+/* --- Global Base Styles (Add to the top of your existing styles.css) --- */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f9; /* Light, calming hospital background */
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* --- Header & Navigation Styles --- */
+header {
+    background-color: #ffffff;
+    color: #004d99; /* Deep blue for professional look */
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+header > div {
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+header p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #004d99;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff5757; /* Highlight red for alerts/actions */
+}
+
+nav button {
+    background-color: #ff5757;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+nav button:hover {
+    background-color: #e04a4a;
+}
+
+/* --- Main Content Styles (For the About Page) --- */
+main {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+main h1 {
+    font-size: 2.5em;
+    color: #004d99;
+    border-bottom: 3px solid #ff5757; /* Red accent line */
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+main p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    text-align: justify;
+    color: #444;
+}
+
+/* Services.html page */
+/* --- Styles Specific to the Services Page (services.html) --- */
+
+/* Adjust Main for Service Layout */
+main h2 {
+    font-size: 1.8em;
+    color: #004d99;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff5757; /* Vertical red accent bar */
+    padding-left: 15px;
+}
+
+/* Styling for the list of features within each service */
+main ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+main ul li {
+    background-color: #f7faff; /* Very light blue background */
+    border: 1px solid #e0e7ff; /* Light blue border */
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+main ul li:before {
+    content: "✔️"; /* Checkmark icon */
+    margin-right: 10px;
+    color: #004d99; /* Blue color for the checkmark */
+    font-weight: bold;
+}
+
+main ul li:hover {
+    transform: translateY(-2px); /* Slight lift effect on hover */
+    background-color: #eaf1ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Login Modal Styles --- */
+
+/* 1. Base Overlay (Covers the whole screen) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Darker semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above everything else */
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+/* 2. Modal Content Box */
+.modal-content {
+    background-color: #f7f7f7; /* Light grey background */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 420px; /* Max width for a clean look */
+    position: relative;
+    text-align: center;
+    border-top: 5px solid #004d99; /* Blue accent line */
+}
+
+.modal-content h2 {
+    color: #004d99; /* Primary Blue */
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* 3. Form Styling */
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #004d99; /* Blue focus color */
+    outline: none;
+}
+
+/* 4. Submit Button */
+.login-submit-button {
+    background-color: #004d99; /* Primary Blue */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 15px;
+}
+
+.login-submit-button:hover {
+    background-color: #003366;
+    transform: translateY(-1px);
+}
+
+/* 5. Close Button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    line-height: 1; /* Stops it from shifting due to height */
+}
+
+/* Error/Message Text */
+.error-message {
+    color: #ff5757; /* Alert Red */
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}

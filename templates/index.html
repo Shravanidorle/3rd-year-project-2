@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
 </head>
 <body>
 
@@ -23,7 +24,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Services</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><button class="login-button" id="login-button">Login</button></li>
             </ul>
         </nav>
@@ -115,7 +116,29 @@
     <!-- Hidden audio element for the buzzer -->
     <audio id="buzzer-sound" src="{{ url_for('static', filename='buzzer.mp3') }}" preload="auto"></audio>
 
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+   
 
+    <!-- Login Modal Overlay (Hidden by default) -->
+    <div id="login-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-login-modal" class="close-button">&times;</button>
+            <h2>Hospital Staff Login</h2>
+            <p>Enter your credentials to access the system controls.</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username (e.g., staff ID)</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-submit-button">Log In</button>
+                <p id="login-message" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

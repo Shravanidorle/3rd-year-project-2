@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>Our Services</title>
+    <!-- IMPORTANT: Link to the styles.css file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
     <!-- Header / Navbar -->
     <header>
-        <div>
+        <div class="container">
             <h1>Hospital Monitoring</h1>
             <p>Real-time fall & posture alerts</p>
         </div>
@@ -17,17 +19,45 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Services</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><button>Login</button></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <h1>About Our Project</h1>
-        <p>This project leverages OpenCV and AI/ML to provide real-time patient monitoring in a hospital setting. Our goal is to enhance patient safety and streamline hospital management by automating the detection of critical events like falls or signs of distress.</p>
+    <main class="container">
+        <h1>Our Core Monitoring Services</h1>
+        <p>The Hospital Monitoring System is designed around three pillars of patient safety and operational efficiency, ensuring immediate, reliable response.</p>
 
-        <p>The system is designed to integrate with existing CCTV infrastructure, providing a non-intrusive way to monitor patients while respecting their privacy. Alerts are sent to a central dashboard, allowing hospital staff to respond promptly to emergencies.</p>
+        <!-- Service 1: Real-Time Fall Detection -->
+        <h2>1. Real-Time Fall Detection (AI Powered)</h2>
+        <p>This primary service uses a trained neural network to analyze live video feeds. It requires confirmation over multiple consecutive frames to trigger an alert, significantly minimizing false alarms and providing crucial time-to-respond metrics.</p>
+        
+        <ul>
+            <li>Immediate audio/visual alerts sent to the staff dashboard.</li>
+            <li>Low confidence prediction display for clinical team review.</li>
+            <li>Frame-based **persistence threshold** for confirmed emergencies.</li>
+        </ul>
+
+        <!-- Service 2: Video Stream Management -->
+        <h2>2. Dynamic Video Stream Management</h2>
+        <p>We provide a centralized dashboard for viewing multiple patient camera feeds simultaneously, utilizing Flask's efficient video streaming capabilities (using multipart/x-mixed-replace).</p>
+        
+        <ul>
+            <li>Centralized, multi-room dashboard view for quick monitoring.</li>
+            <li>**Time-limited streams** (currently 30s) to conserve network bandwidth and memory.</li>
+            <li>Secure, easy integration with standard hospital web infrastructure.</li>
+        </ul>
+
+        <!-- Service 3: Event Logging and Auditing -->
+        <h2>3. Alert Logging and Auditing</h2>
+        <p>Every critical event is logged with a precise timestamp and room location. This creates a non-repudiable audit trail for hospital management to review response times and incident history, improving care quality.</p>
+        
+        <ul>
+            <li>**Timestamped log** of all 'Fall Detected' events.</li>
+            <li>Dedicated alert sidebar for easy visibility of recent incidents.</li>
+            <li>Emergency modal requires acknowledgment, ensuring staff accountability.</li>
+        </ul>
     </main>
 
 </body>
